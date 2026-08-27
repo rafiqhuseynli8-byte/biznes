@@ -149,27 +149,51 @@ h1 em{ font-style:italic; color:var(--accent) }
 }
 .phone .screen{
   position:relative; width:100%; height:100%; border-radius:27px; overflow:hidden;
-  background:#0B0A09;
+  background:#0B0A09; touch-action:pan-y; cursor:grab;
 }
-.phone .screen img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition:opacity .8s ease;
+.phone .screen:active{ cursor:grabbing }
+.phone .track{
+  position:absolute; inset:0; display:flex; will-change:transform;
+  transition:transform .42s cubic-bezier(.22,.72,.28,1);
 }
-.phone .screen img.on{ opacity:1 }
+.phone .track.drag{ transition:none }
+.phone .track img{
+  flex:0 0 100%; width:100%; height:100%; object-fit:cover; object-position:top center;
+  -webkit-user-drag:none; user-select:none; pointer-events:none;
+}
+.phone .arrow{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:4;
+  width:36px; height:36px; border-radius:50%; border:1px solid var(--edge);
+  background:color-mix(in srgb, var(--card) 92%, transparent); color:var(--ink);
+  display:none; place-items:center; cursor:pointer; box-shadow:var(--shadow-s);
+}
+.phone .arrow svg{ width:17px; height:17px }
+.phone .arrow.l{ left:-16px } .phone .arrow.r{ right:-16px }
+@media (min-width:820px){ .phone .arrow{ display:grid } }
+.phone .hint{
+  position:absolute; left:0; right:0; bottom:-46px; text-align:center;
+  font-size:12.5px; color:var(--ink-3); transition:opacity .4s ease;
+}
+.phone .hint.off{ opacity:0 }
 .phone .notch{
   position:absolute; top:8px; left:50%; transform:translateX(-50%);
   width:82px; height:20px; background:#0B0A09; border-radius:0 0 12px 12px; z-index:3;
 }
 .phone .dots{
-  position:absolute; left:0; right:0; bottom:-24px; display:flex; gap:6px;
+  position:absolute; left:0; right:0; bottom:-22px; display:flex; gap:6px;
   justify-content:center;
 }
-.phone .dots i{
-  width:6px; height:6px; border-radius:50%; background:var(--edge); display:block;
+.phone .dots .dot{
+  width:22px; height:22px; padding:0; border:0; background:none; cursor:pointer;
+  display:grid; place-items:center;
+}
+.phone .dots .dot::before{
+  content:""; width:7px; height:7px; border-radius:50%; background:var(--edge);
   transition:background .3s ease, transform .3s ease;
 }
-.phone .dots i.on{ background:var(--accent); transform:scale(1.25) }
-.phone-wrap{ padding-bottom:34px }
+.phone .dots .dot.on::before{ background:var(--accent); transform:scale(1.3) }
+.phone .dots .dot:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:50% }
+.phone-wrap{ padding-bottom:56px }
 
 /* ---------- bölmə başlıqları ---------- */
 section{ padding:54px 0 }
@@ -209,6 +233,10 @@ h2{ margin:0 0 8px; font-size:clamp(26px,6vw,38px); line-height:1.14 }
   letter-spacing:-.005em;
 }
 .g p{ margin:0; font-size:13.5px; color:var(--ink-2); line-height:1.45; flex:1 }
+.g .meta{
+  display:block; font-family:"Archivo",sans-serif; font-weight:600; font-size:11px;
+  letter-spacing:.06em; color:var(--ink-3);
+}
 .g a.open{
   font-family:"Archivo",sans-serif; font-weight:600; font-size:13px;
   text-decoration:none; color:var(--accent); background:var(--accent-soft);
@@ -358,8 +386,15 @@ footer a{ color:var(--ink-2) }
     <div class="phone-wrap">
       <div class="phone">
         <div class="notch" aria-hidden="true"></div>
-        <div class="screen" id="screen"></div>
-        <div class="dots" id="dots" aria-hidden="true"></div>
+        <div class="screen" id="screen"><div class="track" id="track"></div></div>
+        <button class="arrow l" id="prev" type="button" aria-label="Geri">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button class="arrow r" id="next" type="button" aria-label="İrəli">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <div class="dots" id="dots"></div>
+        <p class="hint" id="hint">Barmağınla sürüşdür</p>
       </div>
     </div>
   </div>
@@ -402,7 +437,7 @@ footer a{ color:var(--ink-2) }
 <section>
   <div class="head">
     <h2 class="serif">Qiymət</h2>
-    <p class="sub">Ödəniş işi görəndən sonra. Bəyənməsən, ödəmirsən.</p>
+    <p class="sub">Ödəniş işi görəndən sonra. Bəyənməsən, ödəmirsən.<br>Fərq uzunluqdadır: 10 ₼ bir andır, 35 ₼ oturub baxılan hekayədir.</p>
   </div>
   <div class="prices">
     <div class="price">
@@ -428,14 +463,15 @@ footer a{ color:var(--ink-2) }
       <a class="btn solid wide" href="#sifaris" data-plan="Şəkilli">Seç</a>
     </div>
     <div class="price">
-      <span class="tag">Xüsusi</span>
-      <span class="num">35 <small>₼-dan</small></span>
+      <span class="tag">Hekayə</span>
+      <span class="num">35 <small>₼</small></span>
       <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sıfırdan, yalnız sizin üçün</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Öz ssenarisi, öz dizaynı</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Beş fəsillik böyük səhifə</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Şəkillər, rəqəmlər, uzun məktub</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Oturub baxmağa ≈5 dəqiqə</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>2–3 gün</li>
       </ul>
-      <a class="btn wide" href="#sifaris" data-plan="Xüsusi">Seç</a>
+      <a class="btn wide" href="#sifaris" data-plan="Hekayə">Seç</a>
     </div>
   </div>
 </section>
@@ -470,7 +506,7 @@ footer a{ color:var(--ink-2) }
         <select id="f-paket">
           <option>Sadə — 10 ₼</option>
           <option selected>Şəkilli — 20 ₼</option>
-          <option>Xüsusi — 35 ₼-dan</option>
+          <option>Hekayə — 35 ₼</option>
         </select>
       </div>
       <div class="field">
@@ -525,19 +561,24 @@ footer a{ color:var(--ink-2) }
   var $ = function(id){ return document.getElementById(id); };
 
   /* ---------- nümunələr ---------- */
+  /* [ad, izah, açar, nə vaxt üçün, necə işləyir]
+     Sonuncu sütun dürüst yazılıb: bəziləri özü gedir, bəziləri əl ilə
+     açılır. "Əl ilə açılır" ucuz görünmür — əksinə, insan onu daha çox
+     dəyərləndirir, çünki iştirak edir. */
   var ITEMS = [
-    ["Treyler","Onun haqqında film treyleri: tənqidçi rəyləri, səhnələr, tək nəfərlik zal.","treyler",["ad","sadece","sevgi"]],
-    ["İllər","İllərin halqaları arasından uçuş, şamlı tort və məktub.","ad-gunu",["ad"]],
-    ["Kitab","Parçadan cildli kitab. Səhifələr barmaqla çevrilir.","kitab",["ad","sevgi","sadece"]],
-    ["Qəzet","Birinci səhifə bütünlüklə onun haqqında.","qezet",["ad","sadece"]],
-    ["Qəbz","Sənə verdiyi hər şey sətir-sətir. Yekun: qiyməti yoxdur.","qebz",["sevgi","sadece"]],
-    ["Bilet","Növbəti gəzintiyə minik talonu. Arxasında qeyd var.","bilet",["sevgi","sadece"]],
-    ["Sertifikat","Möhürlü və lentli mükafat.","sertifikat",["ugur","sadece"]],
-    ["Kaset","Arxivdən köhnə lent, üstündə onun adı.","kaset",["sadece","sevgi"]],
-    ["Metro","Hər stansiya bir xatirə. Qatar özü gedir.","metro",["sevgi","sadece"]],
-    ["Tablo","Hava limanı tablosu: hərflər taqqıltı ilə çevrilir.","tablo",["ad","bayram"]],
-    ["Dördyarpaq","Üçyarpaqların arasından dördüncüsünü tapmaq lazımdır.","dordyarpaq",["ugur","bayram"]],
-    ["Kağız","Əl yazısı. Alınmayan sətirlərin üstündən xətt çəkilir və qalır.","siqnal-kagiz",["sevgi","uzr"]]
+    ["Hekayə","Beş fəsil: salam, şəkillər, rəqəmlər, məktub və arzu. Ən böyüyü — oturub baxılır.","hekaye",["ad","sevgi","bayram","sadece"],"5 fəsil · şəkillər · ≈5 dəqiqə"],
+    ["Treyler","Onun haqqında film treyleri: tənqidçi rəyləri, səhnələr, tək nəfərlik zal.","treyler",["ad","sadece","sevgi"],"özü gedir · ≈70 saniyə"],
+    ["İllər","Şamları o özü söndürür, sonra illərin arasından uçuş və məktub.","ad-gunu",["ad"],"şamları o söndürür"],
+    ["Kitab","Parçadan cildli kitab. Səhifələri barmaqla vərəqləyir.","kitab",["ad","sevgi","sadece"],"vərəqləyir"],
+    ["Qəzet","Birinci səhifə bütünlüklə onun haqqında.","qezet",["ad","sadece"],"oxuyur, sürüşdürür"],
+    ["Qəbz","Sənə verdiyi hər şey sətir-sətir. Yekun: qiyməti yoxdur.","qebz",["sevgi","sadece"],"özü yazılır"],
+    ["Bilet","Növbəti gəzintiyə minik talonu. Çevirib arxasını oxuyur.","bilet",["sevgi","sadece"],"çevirir"],
+    ["Sertifikat","Möhürlü və lentli mükafat.","sertifikat",["ugur","sadece"],"möhür vurulur"],
+    ["Kaset","Arxivdən köhnə lent, üstündə onun adı.","kaset",["sadece","sevgi"],"özü gedir · ≈90 saniyə"],
+    ["Metro","Hər stansiya bir xatirə. Qatar özü gedir.","metro",["sevgi","sadece"],"özü gedir · ≈20 saniyə"],
+    ["Tablo","Hava limanı tablosu: hərflər taqqıltı ilə çevrilir.","tablo",["ad","bayram"],"hərflər çevrilir"],
+    ["Dördyarpaq","Üçyarpaqların arasından dördüncüsünü tapmalıdır.","dordyarpaq",["ugur","bayram"],"axtarıb tapır"],
+    ["Kağız","Əl yazısı. Alınmayan sətirlərin üstündən xətt çəkilir və qalır.","siqnal-kagiz",["sevgi","uzr"],"özü gedir · ≈1 dəqiqə"]
   ];
   /* Nümunə linkləri. Sayt variantında yanındakı qovluğa gedir;
      artefakt variantında bu sətir hazır ünvanlarla əvəz olunur. */
@@ -562,10 +603,11 @@ footer a{ color:var(--ink-2) }
     var b = document.createElement("div"); b.className = "body";
     var h = document.createElement("h3"); h.textContent = it[0];
     var p = document.createElement("p"); p.textContent = it[1];
+    var m = document.createElement("span"); m.className = "meta"; m.textContent = it[4];
     var a = document.createElement("a");
     a.className = "open"; a.textContent = "Aç";
     a.href = href(it[2]); a.target = "_blank"; a.rel = "noopener";
-    b.appendChild(h); b.appendChild(p); b.appendChild(a);
+    b.appendChild(h); b.appendChild(p); b.appendChild(m); b.appendChild(a);
     d.appendChild(s); d.appendChild(b);
     return d;
   }
@@ -589,25 +631,87 @@ footer a{ color:var(--ink-2) }
     chips.appendChild(b);
   });
 
-  /* ---------- telefonda dönən şəkillər ---------- */
-  var SHOW = ["treyler","ad-gunu","qezet","siqnal-kagiz","kitab"];
-  var screen = $("screen"), dots = $("dots"), imgs = [], bulbs = [], cur = 0;
+  /* ---------- telefondakı lent ----------
+     Özü dönür, amma insan toxunan kimi dayanır və bir daha başlamır:
+     əl ilə baxmaq istəyənə mane olmaq ən yorucu şeydir. */
+  var SHOW = ["hekaye","treyler","qezet","siqnal-kagiz","ad-gunu","kitab"];
+  var track = $("track"), dots = $("dots"), hint = $("hint");
+  var bulbs = [], cur = 0, timer = null, touched = false;
+
   SHOW.forEach(function(k, i){
     var im = document.createElement("img");
     im.src = IMG(k); im.alt = ""; im.decoding = "async";
-    if (i === 0) im.className = "on";
-    screen.appendChild(im); imgs.push(im);
-    var d = document.createElement("i");
-    if (i === 0) d.className = "on";
+    track.appendChild(im);
+    var d = document.createElement("button");
+    d.type = "button"; d.className = "dot" + (i === 0 ? " on" : "");
+    d.setAttribute("aria-label", String(i + 1));
+    d.addEventListener("click", function(){ stop(); go(i); });
     dots.appendChild(d); bulbs.push(d);
   });
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && imgs.length > 1){
-    setInterval(function(){
-      imgs[cur].classList.remove("on"); bulbs[cur].classList.remove("on");
-      cur = (cur + 1) % imgs.length;
-      imgs[cur].classList.add("on"); bulbs[cur].classList.add("on");
-    }, 3200);
+
+  function go(i){
+    cur = Math.max(0, Math.min(SHOW.length - 1, i));
+    track.style.transform = "translateX(" + (-cur * 100) + "%)";
+    bulbs.forEach(function(d, n){ d.classList.toggle("on", n === cur); });
   }
+  function stop(){
+    touched = true;
+    if (timer){ clearInterval(timer); timer = null; }
+    hint.classList.add("off");
+  }
+  function auto(){
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    timer = setInterval(function(){
+      if (touched) return;
+      go((cur + 1) % SHOW.length);
+    }, 4200);
+  }
+  auto();
+
+  $("prev").addEventListener("click", function(){ stop(); go(cur - 1); });
+  $("next").addEventListener("click", function(){ stop(); go(cur + 1); });
+
+  /* barmaqla sürüşdürmə */
+  var x0 = null, dx = 0, w = 1;
+  var screen = $("screen");
+  function down(e){
+    if (e.button != null && e.button !== 0) return;
+    stop();
+    x0 = e.clientX; dx = 0; w = screen.offsetWidth || 1;
+    track.classList.add("drag");
+    try{ screen.setPointerCapture(e.pointerId); }catch(err){}
+  }
+  function move(e){
+    if (x0 === null) return;
+    dx = e.clientX - x0;
+    /* kənarlarda müqavimət — divara dirənmə hissi */
+    if ((cur === 0 && dx > 0) || (cur === SHOW.length - 1 && dx < 0)) dx *= .32;
+    track.style.transform = "translateX(" + (-cur * 100 + (dx / w) * 100) + "%)";
+  }
+  function up(){
+    if (x0 === null) return;
+    track.classList.remove("drag");
+    var moved = Math.abs(dx) > w * .18;
+    go(moved ? cur + (dx < 0 ? 1 : -1) : cur);
+    x0 = null; dx = 0;
+  }
+  if (window.PointerEvent){
+    screen.addEventListener("pointerdown", down);
+    screen.addEventListener("pointermove", move);
+    screen.addEventListener("pointerup", up);
+    screen.addEventListener("pointercancel", up);
+  } else {
+    screen.addEventListener("touchstart", function(e){ down(e.touches[0]); }, { passive:true });
+    screen.addEventListener("touchmove", function(e){ move(e.touches[0]); }, { passive:true });
+    screen.addEventListener("touchend", up);
+  }
+  /* Klaviatura nöqtələrin üstündədir. Ekranın özünə tabindex vermək olmaz:
+     ona toxunanda brauzer səhifəni fokusa doğru sürüşdürür və altdakı
+     telefon sıçrayır — barmaqla baxan adam üçün ən qıcıqlandırıcı şey. */
+  dots.addEventListener("keydown", function(e){
+    if (e.key === "ArrowLeft"){ stop(); go(cur - 1); bulbs[cur].focus(); }
+    if (e.key === "ArrowRight"){ stop(); go(cur + 1); bulbs[cur].focus(); }
+  });
 
   /* ---------- sifariş → WhatsApp ---------- */
   function orderText(){

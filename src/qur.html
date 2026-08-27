@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zərf — səhifə yığ</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FAF6EF">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Rafiqin öz aləti. Müştəri üçün deyil — heç yerdən link verilmir.
+
+   İki cür nəticə verir:
+     1. FAYL — dəyərlər faylın içinə yazılır. Linkdə heç nə görünmür,
+        yəni alan adam adı dəyişib başqasına göndərə bilmir.
+     2. LİNK — tez lazım olanda. Ad linkin içindədir, dəyişmək olar.
+   ============================================================ */
+:root{
+  --paper:#FAF6EF; --card:#FFFCF7; --edge:#E6DDCC;
+  --ink:#17140F; --ink-2:#5B554B; --ink-3:#8E8778;
+  --accent:#A8552B; --accent-soft:#F5E7DA; --deep:#2E5D4F;
+  --shadow:0 1px 2px rgba(23,20,15,.05), 0 12px 28px -20px rgba(23,20,15,.45);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#12100E; --card:#1A1815; --edge:#2E2A24;
+    --ink:#F2EDE3; --ink-2:#B0A899; --ink-3:#7E7768;
+    --accent:#E0A472; --accent-soft:#2A1F16; --deep:#8CC0B0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 28px -20px rgba(0,0,0,.9);
+  }
+}
+*{ box-sizing:border-box }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6;
+}
+.wrap{ max-width:760px; margin:0 auto; padding:26px 18px 90px }
+h1{
+  margin:0 0 6px; font-family:"Archivo",sans-serif; font-weight:700;
+  font-size:clamp(25px,6vw,33px); letter-spacing:-.02em;
+}
+.lede{ margin:0 0 24px; color:var(--ink-2); font-size:15.5px }
+h2{
+  margin:26px 0 12px; font-family:"Archivo",sans-serif; font-weight:700; font-size:17px;
+}
+.tiles{ display:grid; gap:9px; grid-template-columns:repeat(auto-fill,minmax(148px,1fr)) }
+.tile{
+  background:var(--card); border:1.5px solid var(--edge); border-radius:12px;
+  padding:12px 13px; cursor:pointer; text-align:left; font:inherit; color:var(--ink);
+  box-shadow:var(--shadow);
+}
+.tile.on{ border-color:var(--accent); background:var(--accent-soft) }
+.tile b{ display:block; font-family:"Archivo",sans-serif; font-size:15px; margin-bottom:2px }
+.tile span{ font-size:12.5px; color:var(--ink-3) }
+.tile:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+
+.box{
+  background:var(--card); border:1px solid var(--edge); border-radius:16px;
+  padding:20px 18px 22px; box-shadow:var(--shadow); margin:0 0 16px;
+}
+.field{ margin:0 0 14px }
+.field:last-child{ margin-bottom:0 }
+.field label{
+  display:block; font-family:"Archivo",sans-serif; font-weight:600; font-size:13px;
+  margin-bottom:6px;
+}
+.field label i{ font-style:normal; color:var(--ink-3); font-weight:500 }
+.field input, .field textarea{
+  width:100%; font:inherit; font-size:16px; color:var(--ink);
+  background:var(--paper); border:1px solid var(--edge); border-radius:10px;
+  padding:12px 13px;
+}
+.field textarea{ min-height:88px; resize:vertical; line-height:1.5 }
+.field input:focus-visible, .field textarea:focus-visible{
+  outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);
+}
+.hint{ margin:5px 0 0; font-size:12.5px; color:var(--ink-3) }
+
+.acts{ display:grid; gap:9px; grid-template-columns:1fr 1fr }
+@media (max-width:520px){ .acts{ grid-template-columns:1fr } }
+.btn{
+  font-family:"Archivo",sans-serif; font-weight:600; font-size:15px;
+  cursor:pointer; padding:14px 18px; border-radius:11px; text-align:center;
+  border:1px solid var(--edge); background:var(--card); color:var(--ink);
+  text-decoration:none; display:block; box-shadow:var(--shadow);
+}
+.btn.solid{ background:var(--accent); border-color:var(--accent); color:#FFF9F2 }
+.btn.done{ background:var(--deep); border-color:var(--deep); color:#FFF9F2 }
+.btn:focus-visible{ outline:2px solid var(--accent); outline-offset:3px }
+.wide{ grid-column:1/-1 }
+
+.tip{
+  background:var(--accent-soft); border-radius:12px; padding:14px 15px;
+  font-size:14px; color:var(--ink-2); margin:0 0 18px;
+}
+.tip b{ color:var(--ink) }
+code{
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+  background:var(--paper); border:1px solid var(--edge); border-radius:6px; padding:1px 5px;
+}
+.out{
+  margin:12px 0 0; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px;
+  color:var(--ink-3); word-break:break-all; line-height:1.45;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Səhifə yığ</h1>
+<p class="lede">Твой инструмент. Клиенту эту страницу не показывай.</p>
+
+<div class="tip">
+  <b>Два способа отдать заказ.</b><br>
+  <b>Файл</b> — значения вшиты внутрь, в адресе ничего нет. Клиент не сможет
+  поменять имя и отправить кому-то ещё. Файл кидаешь прямо в WhatsApp.<br>
+  <b>Ссылка</b> — быстрее, но имя видно в адресе и его можно исправить.
+</div>
+
+<h2>1. Выбери страницу</h2>
+<div class="tiles" id="tiles"></div>
+
+<h2>2. Заполни</h2>
+<div class="box" id="form"></div>
+
+<div id="media" hidden>
+  <h2>Фото и музыка</h2>
+  <div class="box">
+    <div class="field">
+      <label for="pics">Фотографии <i>· до восьми</i></label>
+      <input id="pics" type="file" accept="image/*" multiple>
+      <p class="hint">Они уменьшаются прямо здесь и вшиваются в файл. Интернет для их показа не нужен.</p>
+    </div>
+    <div id="caps"></div>
+    <div class="field">
+      <label for="mus">Музыка <i>· mp3, до 4 МБ</i></label>
+      <input id="mus" type="file" accept="audio/*">
+      <p class="hint" id="musInfo">Не обязательно. Без файла играет тихий аккорд.</p>
+    </div>
+  </div>
+</div>
+
+<h2>3. Забери</h2>
+<div class="box">
+  <div class="acts">
+    <button class="btn solid" id="dl" type="button">Faylı yüklə</button>
+    <button class="btn" id="prev" type="button">Bax</button>
+    <button class="btn wide" id="cp" type="button">Linki kopyala</button>
+  </div>
+  <p class="out" id="out"></p>
+  <p class="hint" id="size"></p>
+</div>
+
+<h2>Как отдать клиенту</h2>
+<div class="tip">
+  <b>1. Файлом в WhatsApp.</b> Скрепка → «Документ» → выбрать файл. Он откроется
+  у человека прямо в телефоне и будет работать даже без интернета. Самый чистый
+  способ: адрес не подделать.<br><br>
+  <b>2. Ссылкой.</b> Быстро, но в адресе видно <code>#ad=Leyla</code>.
+  Для дешёвого заказа нормально.<br><br>
+  <b>3. Своей ссылкой.</b> На github.com в репозитории <code>biznes</code>:
+  Add file → Upload files → закинь файл в папку <code>z</code> с новым именем.
+  Получится адрес вида <code>…/biznes/z/leyla.html</code> — красиво и без параметров.
+</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ── şablonlar ──────────────────────────────────────────────
+     rule: "param"  →  param("ad", "dostum"      (əksəriyyəti)
+           "var"    →  var AD   = "dostum";      (ad-gunu)
+     multi: sətirlər | ilə ayrılır
+     ─────────────────────────────────────────────────────────── */
+  var COMMON = [
+    ["ad",   "Кому (имя)",              "", 0],
+    ["imza", "Подпись — от кого",       "", 0],
+    ["tel",  "Твой номер для кнопки",   "994557026152", 0]
+  ];
+  var T = {
+    "treyler":     { ad:"Treyler",     rule:"param", f:[["studiya","Студия","",0],["tarix","Дата в конце","",0],["yerler","Места (| между)","",1],["men","Кто снял","",0],["son","Последняя строка","",0]] },
+    "ad-gunu":     { ad:"İllər",       rule:"var",   f:[["yas","Сколько лет","",2],["sam","Сколько свечей","",2],["mesaj","Письмо (| между абзацами)","",1]] },
+    "kitab":       { ad:"Kitab",       rule:"param", f:[["altbaslik","Подзаголовок","",0],["fesil","Главы (| между)","",1],["son","Последняя страница","",0]] },
+    "qezet":       { ad:"Qəzet",       rule:"param", f:[["basliq","Заголовок","",0],["sitat","Цитата","",0],["sehir","Город","",0],["xeber","Текст новости","",0]] },
+    "qebz":        { ad:"Qəbz",        rule:"param", f:[["magaza","Название магазина","",0],["maddeler","Строки чека (| между)","",1]] },
+    "bilet":       { ad:"Bilet",       rule:"param", f:[["haradan","Откуда","",0],["haraya","Куда","",0],["vaxt","Время","",0],["qapi","Выход","",0],["yer","Место","",0],["mesaj","Записка на обороте","",1]] },
+    "sertifikat":  { ad:"Sertifikat",  rule:"param", f:[["novu","Название награды","",0],["sebeb","За что","",0],["teskilat","Кто вручает","",0],["maddeler","Пункты (| между)","",1]] },
+    "kaset":       { ad:"Kaset",       rule:"param", f:[["il","Год на этикетке","",0],["sehne","Сцены (| между)","",1],["mesaj","Сообщение (| между)","",1]] },
+    "metro":       { ad:"Metro",       rule:"param", f:[["xett","Название ветки","",0],["stansiya","Станции (| между)","",1],["son","Последняя станция","",0]] },
+    "tablo":       { ad:"Tablo",       rule:"param", f:[["basliq","Верхняя строка","",0],["setir","Строки табло (| между)","",1]] },
+    "dordyarpaq":  { ad:"Dördyarpaq",  rule:"param", f:[["say","Сколько трилистников","",2],["mesaj","Пожелание (| между)","",1]] },
+    "hekaye":      { ad:"Hekayə", rule:"param", media:1, src:"hekaye-tpl", f:[["kicker","Надпись над именем","",0],["alt","Строка на обложке","",0],["salam","Первая глава (| между абзацами)","",1],["reqemler","Числа: 730:gün tanışıq (| между)","",1],["mektub","Письмо (| между абзацами, * = крупно)","",1],["arzu","Пожелание — большая строка","",0],["tarix","Дата внизу","",0]] },
+    "siqnal-kagiz":{ ad:"Kağız",       rule:"param", f:[["basliq","Первый экран","",0],["duraq","Где обрывается","",0],["acilis","Что оказалось","",0],["kodlar","Прозвища через ·","",0],["zeif","Слово под закраской","",0],["yekun","Последняя строка","",0]] }
+  };
+
+  var keys = Object.keys(T), sel = keys[0], vals = {};
+  var PICS = [];      /* [{uri, cap}] */
+  var MUS  = "";
+
+  /* ── plitələr ── */
+  var tiles = $("tiles");
+  keys.forEach(function(k){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "tile" + (k === sel ? " on" : "");
+    var t = document.createElement("b"); t.textContent = T[k].ad;
+    var s = document.createElement("span"); s.textContent = k;
+    b.appendChild(t); b.appendChild(s);
+    b.addEventListener("click", function(){
+      sel = k;
+      Array.prototype.forEach.call(tiles.children, function(x, i){
+        x.classList.toggle("on", keys[i] === sel);
+      });
+      draw();
+    });
+    tiles.appendChild(b);
+  });
+
+  /* ── forma ── */
+  function fields(){
+    var list = COMMON.slice();
+    T[sel].f.forEach(function(f){ list.push(f); });
+    return list;
+  }
+  function draw(){
+    var host = $("form");
+    host.innerHTML = "";
+    fields().forEach(function(f){
+      var id = "v-" + f[0];
+      var d = document.createElement("div"); d.className = "field";
+      var l = document.createElement("label"); l.htmlFor = id;
+      l.textContent = f[1];
+      if (f[3] === 1){ var i = document.createElement("i"); i.textContent = "  ·  | ayırır"; l.appendChild(i); }
+      var el = document.createElement(f[3] === 1 ? "textarea" : "input");
+      el.id = id;
+      if (f[3] === 2) el.setAttribute("inputmode","numeric");
+      el.value = (vals[f[0]] != null) ? vals[f[0]] : f[2];
+      el.addEventListener("input", function(){ vals[f[0]] = el.value; show(); });
+      d.appendChild(l); d.appendChild(el);
+      host.appendChild(d);
+    });
+    $("media").hidden = !T[sel].media;
+    show();
+  }
+
+  /* ── şəkillər: burada kiçildilir, sonra faylın içinə yazılır ── */
+  function shrink(file, cb){
+    var fr = new FileReader();
+    fr.onload = function(){
+      var im = new Image();
+      im.onload = function(){
+        var max = 1000;
+        var k = Math.min(1, max / Math.max(im.width, im.height));
+        var c = document.createElement("canvas");
+        c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+        cb(c.toDataURL("image/jpeg", .72));
+      };
+      im.onerror = function(){ cb(null); };
+      im.src = fr.result;
+    };
+    fr.onerror = function(){ cb(null); };
+    fr.readAsDataURL(file);
+  }
+  function caps(){
+    var host = $("caps");
+    host.innerHTML = "";
+    PICS.forEach(function(p, i){
+      var d = document.createElement("div"); d.className = "field";
+      var l = document.createElement("label");
+      l.textContent = "Подпись под фото " + (i + 1);
+      var el = document.createElement("input");
+      el.value = p.cap || "";
+      el.addEventListener("input", function(){ p.cap = el.value; show(); });
+      d.appendChild(l); d.appendChild(el); host.appendChild(d);
+    });
+  }
+  var pics = $("pics");
+  if (pics) pics.addEventListener("change", function(){
+    var files = Array.prototype.slice.call(pics.files, 0, 8);
+    PICS = []; var left = files.length;
+    if (!left){ caps(); show(); return; }
+    files.forEach(function(f, i){
+      shrink(f, function(uri){
+        if (uri) PICS[i] = { uri:uri, cap:"" };
+        if (--left === 0){
+          PICS = PICS.filter(Boolean);
+          caps(); show();
+        }
+      });
+    });
+  });
+  var mus = $("mus");
+  if (mus) mus.addEventListener("change", function(){
+    var f = mus.files[0];
+    if (!f){ MUS = ""; show(); return; }
+    if (f.size > 4 * 1024 * 1024){
+      $("musInfo").textContent = "Файл больше 4 МБ — страница станет тяжёлой. Возьми короче.";
+      mus.value = ""; MUS = ""; show(); return;
+    }
+    var fr = new FileReader();
+    fr.onload = function(){ MUS = fr.result; $("musInfo").textContent = "Музыка добавлена."; show(); };
+    fr.readAsDataURL(f);
+  });
+
+  /* ── link ── */
+  function pairs(){
+    var out = [];
+    fields().forEach(function(f){
+      var v = (vals[f[0]] != null ? vals[f[0]] : f[2]).trim();
+      if (v) out.push(encodeURIComponent(f[0]) + "=" + encodeURIComponent(v));
+    });
+    return out.join("&");
+  }
+  function link(){
+    var base = new URL("../numune/" + (T[sel].src || sel) + "/", location.href).href;
+    var q = pairs();
+    return q ? base + "#" + q : base;
+  }
+  function show(){
+    $("out").textContent = link();
+    if (!T[sel].media){ $("size").textContent = ""; return; }
+    var extra = PICS.reduce(function(a, p){ return a + p.uri.length; }, 0) + MUS.length;
+    $("size").textContent = PICS.length || MUS
+      ? "Фото: " + PICS.length + " · файл вырастет примерно на " + Math.round(extra * .75 / 1024) + " КБ"
+      : "";
+  }
+
+  /* ── faylın içinə yazmaq ── */
+  function esc(v){ return v.replace(/\\/g, "\\\\").replace(/"/g, '\\"'); }
+  function bake(src){
+    var rule = T[sel].rule;
+    fields().forEach(function(f){
+      var v = (vals[f[0]] != null ? vals[f[0]] : f[2]).trim();
+      if (!v) return;
+      var key = f[0];
+      if (rule === "var" && key !== "ad" && key !== "imza" && key !== "tel"){
+        /* ad-gunu: rəqəmlər və mesaj ayrı adlarla saxlanılır */
+        if (key === "yas"){ src = src.replace(/var\s+YAS\s*=\s*[^;]*;/, "var YAS = " + (parseInt(v,10)||0) + ";"); return; }
+        if (key === "sam"){ src = src.replace(/var\s+SAM_SAYI\s*=\s*[^;]*;/, "var SAM_SAYI = " + (parseInt(v,10)||5) + ";"); return; }
+        if (key === "mesaj"){
+          var arr = v.split("|").map(function(x){ return '"' + esc(x.trim()) + '"'; }).join(", ");
+          src = src.replace(/var\s+MESAJ\s*=\s*\[[\s\S]*?\];/, "var MESAJ = [" + arr + "];");
+          return;
+        }
+      }
+      if (rule === "var" && (key === "ad" || key === "imza")){
+        var NAME = key === "ad" ? "AD" : "IMZA";
+        src = src.replace(new RegExp("var\\s+" + NAME + "\\s*=\\s*\"(?:[^\"\\\\]|\\\\.)*\"\\s*;"),
+                          "var " + NAME + ' = "' + esc(v) + '";');
+        return;
+      }
+      var re = new RegExp('param\\(\\s*"' + key + '"\\s*,\\s*"(?:[^"\\\\]|\\\\.)*"');
+      if (re.test(src)) src = src.replace(re, 'param("' + key + '", "' + esc(v) + '"');
+    });
+    if (T[sel].media){
+      if (PICS.length){
+        var arr = PICS.map(function(p){
+          return '["' + p.uri + '", "' + esc(p.cap || "") + '"]';
+        }).join(", ");
+        src = src.replace(/var\s+SEKILLER\s*=\s*\[[\s\S]*?\];/, "var SEKILLER = [" + arr + "];");
+      }
+      if (MUS){
+        src = src.replace(/var\s+MUSIQI\s*=\s*"[^"]*";/, 'var MUSIQI = "' + MUS + '";');
+      }
+    }
+    return src;
+  }
+
+  var cache = {};
+  function load(cb){
+    if (cache[sel]) { cb(cache[sel]); return; }
+    fetch("../numune/" + (T[sel].src || sel) + "/index.html")
+      .then(function(r){ return r.text(); })
+      .then(function(t){ cache[sel] = t; cb(t); })
+      .catch(function(){ alert("Faylı oxumaq alınmadı. Səhifəni sayt ünvanından aç (fayl kimi yox)."); });
+  }
+  function fileName(){
+    var ad = (vals["ad"] || "sehife").trim().toLowerCase()
+      .replace(/ə/g,"e").replace(/ı/g,"i").replace(/ö/g,"o").replace(/ü/g,"u")
+      .replace(/ç/g,"c").replace(/ş/g,"s").replace(/ğ/g,"g")
+      .replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || "sehife";
+    return ad + "-" + sel + ".html";
+  }
+
+  $("dl").addEventListener("click", function(){
+    load(function(src){
+      var blob = new Blob([bake(src)], { type:"text/html;charset=utf-8" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = fileName();
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+      var b = $("dl"); b.textContent = "Yükləndi ✓"; b.classList.add("done");
+      setTimeout(function(){ b.textContent = "Faylı yüklə"; b.classList.remove("done"); }, 2200);
+    });
+  });
+
+  $("prev").addEventListener("click", function(){
+    load(function(src){
+      var blob = new Blob([bake(src)], { type:"text/html;charset=utf-8" });
+      window.open(URL.createObjectURL(blob), "_blank", "noopener");
+    });
+  });
+
+  $("cp").addEventListener("click", function(){
+    var l = link(), b = $("cp");
+    function ok(){
+      b.textContent = "Kopyalandı ✓"; b.classList.add("done");
+      setTimeout(function(){ b.textContent = "Linki kopyala"; b.classList.remove("done"); }, 1800);
+    }
+    try{
+      navigator.clipboard.writeText(l).then(ok, function(){ fallback(l, ok); });
+    }catch(e){ fallback(l, ok); }
+  });
+  function fallback(text, done){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); done(); }catch(e){}
+    setTimeout(function(){ ta.remove(); }, 200);
+  }
+
+  draw();
+})();
+</script>
+</body>
+</html>
