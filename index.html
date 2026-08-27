@@ -795,6 +795,16 @@ footer a{ color:var(--ink-2) }
      Səhifənin ürəyi: ad yazılan kimi hər şey həmin adla açılır. */
   var NAME = "";
   try{ NAME = localStorage.getItem("zerf.ad") || ""; }catch(e){}
+  /* Linkin özündə ad ola bilər: .../#ad=Leyla — konkret adama göndərəndə
+     səhifə onu artıq hazır qarşılayır. */
+  (function(){
+    try{
+      var h = new URLSearchParams(location.hash.replace(/^#/, ""));
+      var q = new URLSearchParams(location.search);
+      var v = h.get("ad") || q.get("ad");
+      if (v) NAME = v;
+    }catch(e){}
+  })();
 
   function clean(s){ return (s || "").replace(/[<>"'&]/g, "").trim().slice(0, 26); }
   function suffix(){ return NAME ? "#ad=" + encodeURIComponent(NAME) : ""; }
@@ -832,6 +842,13 @@ footer a{ color:var(--ink-2) }
 
   /* ══════════ QALEREYA ══════════ */
   var gal = $("gal"), chips = $("chips"), active = "hamisi";
+  var SEEN = "";           /* sonuncu açdığı nümunə — sifarişdə göstərilir */
+  try{ SEEN = localStorage.getItem("zerf.seen") || ""; }catch(e){}
+  function seen(name){
+    SEEN = name;
+    try{ localStorage.setItem("zerf.seen", name); }catch(e){}
+    refresh();
+  }
 
   ITEMS.forEach(function(it){
     var a = document.createElement("a");
@@ -860,6 +877,7 @@ footer a{ color:var(--ink-2) }
     var m = document.createElement("span"); m.className = "meta"; m.textContent = it[4];
     var o = document.createElement("span"); o.className = "open"; o.textContent = "Aç";
     b.appendChild(h); b.appendChild(p); b.appendChild(m); b.appendChild(o);
+    a.addEventListener("click", function(){ seen(it[0]); });
     a.appendChild(s); a.appendChild(b);
     gal.appendChild(a);
   });
@@ -979,7 +997,9 @@ footer a{ color:var(--ink-2) }
   });
   screen.addEventListener("click", function(){
     if (Math.abs(dx) > 6) return;
-    window.open(href(SHOW[cur]) + suffix(), "_blank", "noopener");
+    var k = SHOW[cur];
+    for (var i = 0; i < ITEMS.length; i++) if (ITEMS[i][2] === k) seen(ITEMS[i][0]);
+    window.open(href(k) + suffix(), "_blank", "noopener");
   });
 
   /* ══════════ SİFARİŞ ══════════ */
@@ -990,6 +1010,7 @@ footer a{ color:var(--ink-2) }
     t += "Münasibət: " + $("f-mun").value + "\n";
     t += "Paket: " + $("f-paket").value + "\n";
     t += "Nə vaxt: " + $("f-vaxt").value;
+    if (SEEN) t += "\nBaxdığım nümunə: " + SEEN;
     if (soz) t += "\n\nDemək istədiyim:\n" + soz;
     return t;
   }
