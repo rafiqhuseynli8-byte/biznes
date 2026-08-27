@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zərf — açılan hədiyyə</title>
+<meta name="description" content="Bir link göndərirsən. O açır və içində özünü görür. Ad gününə, bayrama, üzr istəməyə — şəxsi səhifə.">
+<meta name="theme-color" content="#FAF6EF">
+<link rel="canonical" href="https://rafiqhuseynli8-byte.github.io/biznes/">
+<!-- Linki WhatsApp-a atanda gözəl kart görünsün deyə -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="az_AZ">
+<meta property="og:site_name" content="Zərf">
+<meta property="og:title" content="Zərf — açılan hədiyyə">
+<meta property="og:description" content="Bir link göndər. O açsın və özünü görsün. Ad gününə, bayrama, üzr istəməyə — yalnız bir adam üçün yığılmış səhifə.">
+<meta property="og:url" content="https://rafiqhuseynli8-byte.github.io/biznes/">
+<meta property="og:image" content="https://rafiqhuseynli8-byte.github.io/biznes/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zərf — açılan hədiyyə">
+<meta name="twitter:description" content="Bir link göndər. O açsın və özünü görsün.">
+<meta name="twitter:image" content="https://rafiqhuseynli8-byte.github.io/biznes/img/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;8&#39; fill=&#39;%23A8552B&#39;/%3E%3Cg fill=&#39;none&#39; stroke=&#39;%23FFF9F2&#39; stroke-width=&#39;2.2&#39; stroke-linecap=&#39;round&#39; stroke-linejoin=&#39;round&#39;%3E%3Crect x=&#39;7&#39; y=&#39;9.5&#39; width=&#39;18&#39; height=&#39;13&#39; rx=&#39;2&#39;/%3E%3Cpath d=&#39;m7 11 9 6.5 9-6.5&#39;/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ZƏRF — satış səhifəsi.
+
+   Qayda: heç bir uydurma yoxdur. Nə saxta rəy, nə "bu gün 12 sifariş",
+   nə geri sayan saat. Alıcı aldadılmır — sadəcə ona lazım olan şey
+   düzgün sıra ilə göstərilir: əvvəl işin özü (ekran şəkilləri), sonra
+   necə olduğu, sonra qiymət, sonra sifariş.
+
+   Mətn şrifti sistemdəndir — zəif internetdə səhifə dərhal açılsın.
+   ============================================================ */
+:root{
+  --paper:#FAF6EF;
+  --card:#FFFCF7;
+  --edge:#E6DDCC;
+  --ink:#17140F;
+  --ink-2:#5B554B;
+  --ink-3:#8E8778;
+  --accent:#A8552B;
+  --accent-soft:#F5E7DA;
+  --deep:#2E5D4F;
+  --shadow-s:0 1px 2px rgba(23,20,15,.05), 0 8px 20px -14px rgba(23,20,15,.4);
+  --shadow-m:0 2px 4px rgba(23,20,15,.05), 0 22px 46px -26px rgba(23,20,15,.55);
+  --r:15px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#12100E; --card:#1A1815; --edge:#2E2A24;
+    --ink:#F2EDE3; --ink-2:#B0A899; --ink-3:#7E7768;
+    --accent:#E0A472; --accent-soft:#2A1F16; --deep:#8CC0B0;
+    --shadow-s:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -14px rgba(0,0,0,.9);
+    --shadow-m:0 2px 4px rgba(0,0,0,.4), 0 24px 48px -28px rgba(0,0,0,1);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12100E; --card:#1A1815; --edge:#2E2A24;
+  --ink:#F2EDE3; --ink-2:#B0A899; --ink-3:#7E7768;
+  --accent:#E0A472; --accent-soft:#2A1F16; --deep:#8CC0B0;
+  --shadow-s:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -14px rgba(0,0,0,.9);
+  --shadow-m:0 2px 4px rgba(0,0,0,.4), 0 24px 48px -28px rgba(0,0,0,1);
+}
+
+*{ box-sizing:border-box }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100% }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:16.5px; line-height:1.62; overflow-x:hidden;
+}
+img{ max-width:100%; display:block }
+.wrap{ max-width:1040px; margin:0 auto; padding:0 20px }
+.serif{
+  font-family:"Instrument Serif",Georgia,serif; font-weight:400;
+  letter-spacing:-.005em;
+}
+
+/* ---------- üst zolaq ---------- */
+.bar{
+  position:sticky; top:0; z-index:40; backdrop-filter:blur(10px);
+  background:color-mix(in srgb, var(--paper) 86%, transparent);
+  border-bottom:1px solid transparent; transition:border-color .3s ease;
+}
+.bar.stuck{ border-bottom-color:var(--edge) }
+.bar .in{
+  max-width:1040px; margin:0 auto; padding:11px 20px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.logo{ display:flex; align-items:center; gap:9px; text-decoration:none; color:var(--ink) }
+.logo .mark{
+  width:29px; height:29px; border-radius:8px; background:var(--accent);
+  display:grid; place-items:center; color:var(--paper); flex:none;
+}
+.logo .mark svg{ width:16px; height:16px; display:block }
+.logo b{
+  font-family:"Archivo",sans-serif; font-weight:700; font-size:17px;
+  letter-spacing:.02em;
+}
+.bar .btn{ padding:9px 16px; font-size:13.5px }
+
+/* ---------- düymələr ---------- */
+.btn{
+  font-family:"Archivo",sans-serif; font-weight:600; font-size:15px;
+  text-decoration:none; cursor:pointer; padding:14px 24px; border-radius:12px;
+  border:1px solid var(--edge); background:var(--card); color:var(--ink);
+  display:inline-block; box-shadow:var(--shadow-s); text-align:center;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:active{ transform:translateY(1px) }
+.btn.solid{ background:var(--accent); border-color:var(--accent); color:#FFF9F2 }
+.btn.wide{ width:100%; }
+.btn:focus-visible{ outline:2px solid var(--accent); outline-offset:3px }
+
+/* ---------- hero ---------- */
+.hero{ padding:46px 0 8px }
+.hero .cols{ display:grid; gap:34px; align-items:center }
+@media (min-width:820px){
+  .hero{ padding:64px 0 20px }
+  .hero .cols{ grid-template-columns:1.05fr .95fr; gap:46px }
+}
+.eyebrow{
+  margin:0 0 14px; font-family:"Archivo",sans-serif; font-weight:600;
+  font-size:11.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent);
+}
+h1{
+  margin:0 0 18px; font-size:clamp(35px,8.6vw,58px); line-height:1.08;
+  text-wrap:balance;
+}
+h1 em{ font-style:italic; color:var(--accent) }
+.lead{ margin:0 0 26px; color:var(--ink-2); font-size:17.5px; max-width:32em }
+.hero .acts{ display:flex; gap:11px; flex-wrap:wrap }
+.microtrust{
+  margin:18px 0 0; padding:0; list-style:none; display:flex; flex-wrap:wrap;
+  gap:6px 16px; color:var(--ink-3); font-size:13.5px;
+}
+.microtrust li{ display:flex; align-items:center; gap:6px }
+.microtrust svg{ width:14px; height:14px; color:var(--deep); flex:none }
+
+/* ---------- telefon ---------- */
+.phone{
+  position:relative; width:min(258px,72vw); margin:0 auto; aspect-ratio:390/844;
+  background:#0B0A09; border-radius:34px; padding:8px;
+  box-shadow:var(--shadow-m), 0 0 0 1px rgba(255,255,255,.06) inset;
+}
+.phone .screen{
+  position:relative; width:100%; height:100%; border-radius:27px; overflow:hidden;
+  background:#0B0A09;
+}
+.phone .screen img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity .8s ease;
+}
+.phone .screen img.on{ opacity:1 }
+.phone .notch{
+  position:absolute; top:8px; left:50%; transform:translateX(-50%);
+  width:82px; height:20px; background:#0B0A09; border-radius:0 0 12px 12px; z-index:3;
+}
+.phone .dots{
+  position:absolute; left:0; right:0; bottom:-24px; display:flex; gap:6px;
+  justify-content:center;
+}
+.phone .dots i{
+  width:6px; height:6px; border-radius:50%; background:var(--edge); display:block;
+  transition:background .3s ease, transform .3s ease;
+}
+.phone .dots i.on{ background:var(--accent); transform:scale(1.25) }
+.phone-wrap{ padding-bottom:34px }
+
+/* ---------- bölmə başlıqları ---------- */
+section{ padding:54px 0 }
+/* yapışqan zolaq başlığın üstünə düşməsin */
+section[id], #top{ scroll-margin-top:70px }
+.head{ margin:0 0 26px; max-width:34em }
+h2{ margin:0 0 8px; font-size:clamp(26px,6vw,38px); line-height:1.14 }
+.sub{ margin:0; color:var(--ink-2); font-size:16.5px }
+
+/* ---------- münasibət düymələri ---------- */
+.chips{ display:flex; gap:8px; flex-wrap:wrap; margin:0 0 22px }
+.chip{
+  font-family:"Archivo",sans-serif; font-weight:600; font-size:13.5px;
+  padding:9px 15px; border-radius:999px; cursor:pointer;
+  border:1px solid var(--edge); background:var(--card); color:var(--ink-2);
+  transition:background .18s ease, color .18s ease, border-color .18s ease;
+}
+.chip.on{ background:var(--accent); border-color:var(--accent); color:#FFF9F2 }
+.chip:focus-visible{ outline:2px solid var(--accent); outline-offset:3px }
+
+/* ---------- qalereya ---------- */
+.gal{ display:grid; gap:14px; grid-template-columns:repeat(2,1fr) }
+@media (min-width:600px){ .gal{ grid-template-columns:repeat(3,1fr) } }
+@media (min-width:900px){ .gal{ grid-template-columns:repeat(4,1fr) } }
+.g{
+  background:var(--card); border:1px solid var(--edge); border-radius:var(--r);
+  overflow:hidden; box-shadow:var(--shadow-s); display:flex; flex-direction:column;
+}
+.g .shot{
+  position:relative; aspect-ratio:390/620; overflow:hidden; background:#0B0A09;
+  border-bottom:1px solid var(--edge);
+}
+.g .shot img{ width:100%; height:100%; object-fit:cover; object-position:top center }
+.g .body{ padding:12px 13px 14px; display:flex; flex-direction:column; gap:7px; flex:1 }
+.g h3{
+  margin:0; font-family:"Archivo",sans-serif; font-weight:700; font-size:15px;
+  letter-spacing:-.005em;
+}
+.g p{ margin:0; font-size:13.5px; color:var(--ink-2); line-height:1.45; flex:1 }
+.g a.open{
+  font-family:"Archivo",sans-serif; font-weight:600; font-size:13px;
+  text-decoration:none; color:var(--accent); background:var(--accent-soft);
+  border-radius:9px; padding:9px 0; text-align:center; display:block;
+}
+
+/* ---------- addımlar ---------- */
+.steps{ display:grid; gap:13px }
+@media (min-width:760px){ .steps{ grid-template-columns:repeat(3,1fr) } }
+.step{
+  background:var(--card); border:1px solid var(--edge); border-radius:var(--r);
+  padding:20px 19px; box-shadow:var(--shadow-s);
+}
+.step .n{
+  width:30px; height:30px; border-radius:9px; background:var(--accent-soft);
+  color:var(--accent); display:grid; place-items:center; margin-bottom:12px;
+  font-family:"Archivo",sans-serif; font-weight:700; font-size:15px;
+}
+.step b{ display:block; font-family:"Archivo",sans-serif; font-size:16.5px; margin-bottom:4px }
+.step span{ color:var(--ink-2); font-size:15px }
+
+/* ---------- qiymət ---------- */
+.prices{ display:grid; gap:13px }
+@media (min-width:760px){ .prices{ grid-template-columns:repeat(3,1fr); align-items:start } }
+.price{
+  background:var(--card); border:1px solid var(--edge); border-radius:var(--r);
+  padding:22px 20px 24px; box-shadow:var(--shadow-s); position:relative;
+}
+.price.pick{ border-color:var(--accent); box-shadow:var(--shadow-m) }
+.price .badge{
+  position:absolute; top:-11px; left:20px; background:var(--deep); color:#FFF9F2;
+  font-family:"Archivo",sans-serif; font-weight:600; font-size:11px;
+  letter-spacing:.14em; text-transform:uppercase; padding:5px 11px; border-radius:999px;
+}
+.price .tag{
+  display:block; font-family:"Archivo",sans-serif; font-weight:600; font-size:11.5px;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3); margin-bottom:8px;
+}
+.price .num{
+  display:block; font-family:"Instrument Serif",Georgia,serif; font-size:44px;
+  line-height:1; margin-bottom:14px;
+}
+.price .num small{ font-size:19px; color:var(--ink-3) }
+.price ul{ margin:0 0 18px; padding:0; list-style:none; display:grid; gap:8px }
+.price li{ display:flex; gap:9px; font-size:15px; color:var(--ink-2); line-height:1.45 }
+.price li svg{ width:15px; height:15px; color:var(--deep); flex:none; margin-top:4px }
+
+/* ---------- sifariş ---------- */
+.order{
+  background:var(--card); border:1px solid var(--edge); border-radius:20px;
+  padding:26px 22px 28px; box-shadow:var(--shadow-m);
+}
+@media (min-width:760px){ .order{ padding:34px 34px 36px } }
+.field{ margin:0 0 15px }
+.field label{
+  display:block; font-family:"Archivo",sans-serif; font-weight:600; font-size:13.5px;
+  margin-bottom:7px; color:var(--ink);
+}
+.field input, .field select, .field textarea{
+  width:100%; font:inherit; font-size:16px; color:var(--ink);
+  background:var(--paper); border:1px solid var(--edge); border-radius:11px;
+  padding:13px 14px; -webkit-appearance:none; appearance:none;
+}
+.field textarea{ min-height:96px; resize:vertical; line-height:1.5 }
+.field select{
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-position:calc(100% - 19px) calc(50% + 1px), calc(100% - 14px) calc(50% + 1px);
+  background-size:5px 5px, 5px 5px; background-repeat:no-repeat; padding-right:38px;
+}
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible{
+  outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);
+}
+.two{ display:grid; gap:15px }
+@media (min-width:560px){ .two{ grid-template-columns:1fr 1fr } }
+.note{ margin:14px 0 0; font-size:13.5px; color:var(--ink-3); text-align:center }
+
+/* ---------- suallar ---------- */
+details{
+  background:var(--card); border:1px solid var(--edge); border-radius:13px;
+  padding:15px 17px; margin:0 0 10px; box-shadow:var(--shadow-s);
+}
+summary{
+  cursor:pointer; font-family:"Archivo",sans-serif; font-weight:600; font-size:16px;
+  list-style:none; display:flex; justify-content:space-between; gap:14px; align-items:center;
+}
+summary::-webkit-details-marker{ display:none }
+summary::after{ content:"+"; color:var(--accent); font-size:20px; line-height:1; flex:none }
+details[open] summary::after{ content:"–" }
+details p{ margin:11px 0 0; color:var(--ink-2); font-size:15.5px }
+
+/* ---------- son ---------- */
+.final{
+  background:var(--ink); color:var(--paper); border-radius:20px;
+  padding:38px 24px 40px; text-align:center; box-shadow:var(--shadow-m);
+}
+.final h2{ color:var(--paper); margin-bottom:10px }
+.final p{ margin:0 auto 24px; color:color-mix(in srgb, var(--paper) 72%, transparent); max-width:26em }
+.final .btn{ background:var(--paper); border-color:var(--paper); color:var(--ink) }
+
+footer{
+  padding:34px 0 56px; text-align:center; color:var(--ink-3); font-size:14px;
+}
+footer a{ color:var(--ink-2) }
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto }
+  .phone .screen img{ transition:none }
+}
+</style>
+</head>
+<body>
+
+<div class="bar" id="bar">
+  <div class="in">
+    <a class="logo" href="#top">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="2"/><path d="m2 7 10 7 10-7"/>
+        </svg>
+      </span>
+      <b>Zərf</b>
+    </a>
+    <a class="btn solid" id="topOrder" href="#sifaris">Sifariş et</a>
+  </div>
+</div>
+
+<div class="wrap" id="top">
+
+<section class="hero">
+  <div class="cols">
+    <div>
+      <p class="eyebrow">Açılan hədiyyə</p>
+      <h1 class="serif">Bir link göndər.<br>O açsın və <em>özünü</em> görsün.</h1>
+      <p class="lead">Ad gününə, bayrama, üzr istəməyə, sadəcə xoş sözə — yalnız bir
+      adam üçün yığılmış səhifə. Adı içindədir, musiqisi var, hər telefonda açılır.
+      Heç nə yükləmək lazım deyil.</p>
+      <div class="acts">
+        <a class="btn solid" href="#numuneler">Nümunələrə bax</a>
+        <a class="btn" id="heroWa" href="#sifaris">WhatsApp-da yaz</a>
+      </div>
+      <ul class="microtrust">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Ödəniş işi görəndən sonra</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Adətən 1 gün</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Düzəlişlər pulsuz</li>
+      </ul>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="notch" aria-hidden="true"></div>
+        <div class="screen" id="screen"></div>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="numuneler">
+  <div class="head">
+    <h2 class="serif">Nümunələr</h2>
+    <p class="sub">Hamısı açıqdır — bas və özün bax. Nümunələrdə ad yazılmayıb;
+    sənin sifarişində orada istədiyin ad olacaq.</p>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="gal" id="gal"></div>
+</section>
+
+<section>
+  <div class="head">
+    <h2 class="serif">Necə olur</h2>
+    <p class="sub">Üç addım. Adətən bir gün çəkir.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="n">1</div>
+      <b>Yazırsan</b>
+      <span>Kimə, hansı münasibətlə və nə demək istədiyini deyirsən. Uzun yazmağa ehtiyac yoxdur — qalan sualları mən verirəm.</span>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <b>Görürsən</b>
+      <span>Hazır səhifəni əvvəlcə sənə göndərirəm. Bəyənmədiyin yeri deyirsən, düzəldirəm. Düzəliş pulsuzdur.</span>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <b>Göndərirsən</b>
+      <span>Linki ona atırsan. Səhifə həmişəlik işləyir; faylını da verirəm — o hətta internetsiz açılır.</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="head">
+    <h2 class="serif">Qiymət</h2>
+    <p class="sub">Ödəniş işi görəndən sonra. Bəyənməsən, ödəmirsən.</p>
+  </div>
+  <div class="prices">
+    <div class="price">
+      <span class="tag">Sadə</span>
+      <span class="num">10 <small>₼</small></span>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Nümunələrdən biri, onun adı ilə</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Mətn sənin sözlərinlə</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Bir gün ərzində</li>
+      </ul>
+      <a class="btn wide" href="#sifaris" data-plan="Sadə">Seç</a>
+    </div>
+    <div class="price pick">
+      <span class="badge">Ən çox seçilən</span>
+      <span class="tag">Şəkilli</span>
+      <span class="num">20 <small>₼</small></span>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fotoları səhifənin içində</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Uzun məktub, istədiyin qədər</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Musiqi əlavə oluna bilər</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>İki dəfə düzəliş — pulsuz</li>
+      </ul>
+      <a class="btn solid wide" href="#sifaris" data-plan="Şəkilli">Seç</a>
+    </div>
+    <div class="price">
+      <span class="tag">Xüsusi</span>
+      <span class="num">35 <small>₼-dan</small></span>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sıfırdan, yalnız sizin üçün</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Öz ssenarisi, öz dizaynı</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>2–3 gün</li>
+      </ul>
+      <a class="btn wide" href="#sifaris" data-plan="Xüsusi">Seç</a>
+    </div>
+  </div>
+</section>
+
+<section id="sifaris">
+  <div class="head">
+    <h2 class="serif">Sifariş</h2>
+    <p class="sub">Doldur — düymə WhatsApp-ı açacaq və mesaj artıq yazılmış olacaq.
+    Sən sadəcə göndər.</p>
+  </div>
+  <div class="order">
+    <div class="two">
+      <div class="field">
+        <label for="f-kime">Kimə?</label>
+        <input id="f-kime" type="text" placeholder="Adı" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="f-mun">Münasibət</label>
+        <select id="f-mun">
+          <option>Ad günü</option>
+          <option>Bayram</option>
+          <option>Üzr istəmək</option>
+          <option>Sevgi, ürək sözü</option>
+          <option>Uğur diləmək</option>
+          <option>Sadəcə, səbəbsiz</option>
+        </select>
+      </div>
+    </div>
+    <div class="two">
+      <div class="field">
+        <label for="f-paket">Paket</label>
+        <select id="f-paket">
+          <option>Sadə — 10 ₼</option>
+          <option selected>Şəkilli — 20 ₼</option>
+          <option>Xüsusi — 35 ₼-dan</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-vaxt">Nə vaxt lazımdır?</label>
+        <select id="f-vaxt">
+          <option>Sabaha</option>
+          <option>Bu gün, tələsirəm</option>
+          <option>Bu həftə</option>
+          <option>Tələsmirəm</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="f-soz">Nə demək istəyirsən?</label>
+      <textarea id="f-soz" placeholder="Bir neçə söz kifayətdir. İstəsən, öz mətnini olduğu kimi yaz — dəyişmirəm."></textarea>
+    </div>
+    <a class="btn solid wide" id="send" href="#" target="_blank" rel="noopener">WhatsApp-da göndər</a>
+    <p class="note">Heç nə göndərilmir, sadəcə WhatsApp açılır. Fikrini son anda da dəyişə bilərsən.</p>
+  </div>
+</section>
+
+<section>
+  <div class="head">
+    <h2 class="serif">Suallar</h2>
+  </div>
+  <details><summary>Telefonda açılır?</summary><p>Bəli — hər telefonda və kompüterdə. Proqram yükləmək lazım deyil, sadəcə linkə basır.</p></details>
+  <details><summary>Link nə qədər işləyir?</summary><p>Həmişəlik. Üstəlik faylı da verirəm: onu saxlasan, internet olmasa belə açılır.</p></details>
+  <details><summary>Başqası görə bilər?</summary><p>Xeyr. Link yalnız sənin göndərdiyin adamdadır. Heç bir siyahıda, heç bir axtarışda görünmür.</p></details>
+  <details><summary>Mətni özüm yaza bilərəm?</summary><p>Əlbəttə, hətta belə daha yaxşı olur. Öz sözlərini göndər — olduğu kimi qoyuram, bir hərfini də dəyişmirəm.</p></details>
+  <details><summary>Bəyənməsəm?</summary><p>Düzəldirəm. Yenə bəyənməsən, ödəmirsən. Ödəniş həmişə işi gördükdən sonradır.</p></details>
+  <details><summary>Şəkil və musiqi qoymaq olar?</summary><p>Olar. Şəkillər səhifənin içinə yığılır, kənar heç bir yerə yüklənmir. Musiqi də eyni cür.</p></details>
+</section>
+
+<section>
+  <div class="final">
+    <h2 class="serif">Kiminsə günü bu həftə var?</h2>
+    <p>Bir gün bəs edir. Adını yaz, qalanını mən edərəm.</p>
+    <a class="btn" id="finalWa" href="#sifaris">Sifariş et</a>
+  </div>
+</section>
+
+<footer>
+  <p>Zərf · Bakı · <a id="footWa" href="#sifaris">WhatsApp</a></p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var TEL = "994557026152";
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- nümunələr ---------- */
+  var ITEMS = [
+    ["Treyler","Onun haqqında film treyleri: tənqidçi rəyləri, səhnələr, tək nəfərlik zal.","treyler",["ad","sadece","sevgi"]],
+    ["İllər","İllərin halqaları arasından uçuş, şamlı tort və məktub.","ad-gunu",["ad"]],
+    ["Kitab","Parçadan cildli kitab. Səhifələr barmaqla çevrilir.","kitab",["ad","sevgi","sadece"]],
+    ["Qəzet","Birinci səhifə bütünlüklə onun haqqında.","qezet",["ad","sadece"]],
+    ["Qəbz","Sənə verdiyi hər şey sətir-sətir. Yekun: qiyməti yoxdur.","qebz",["sevgi","sadece"]],
+    ["Bilet","Növbəti gəzintiyə minik talonu. Arxasında qeyd var.","bilet",["sevgi","sadece"]],
+    ["Sertifikat","Möhürlü və lentli mükafat.","sertifikat",["ugur","sadece"]],
+    ["Kaset","Arxivdən köhnə lent, üstündə onun adı.","kaset",["sadece","sevgi"]],
+    ["Metro","Hər stansiya bir xatirə. Qatar özü gedir.","metro",["sevgi","sadece"]],
+    ["Tablo","Hava limanı tablosu: hərflər taqqıltı ilə çevrilir.","tablo",["ad","bayram"]],
+    ["Dördyarpaq","Üçyarpaqların arasından dördüncüsünü tapmaq lazımdır.","dordyarpaq",["ugur","bayram"]],
+    ["Kağız","Əl yazısı. Alınmayan sətirlərin üstündən xətt çəkilir və qalır.","siqnal-kagiz",["sevgi","uzr"]]
+  ];
+  /* Nümunə linkləri. Sayt variantında yanındakı qovluğa gedir;
+     artefakt variantında bu sətir hazır ünvanlarla əvəz olunur. */
+  var LINKS = null; /* BUILD:LINKS */
+  function href(k){ return LINKS ? LINKS[k] : "numune/" + k + "/"; }
+  var IMG = function(k){ return "img/" + k + ".jpg"; };
+
+  var CHIPS = [
+    ["hamisi","Hamısı"], ["ad","Ad günü"], ["bayram","Bayram"],
+    ["sevgi","Ürək sözü"], ["uzr","Üzr istəmək"], ["ugur","Uğur"], ["sadece","Sadəcə"]
+  ];
+
+  var gal = $("gal"), chips = $("chips"), active = "hamisi";
+
+  function card(it){
+    var d = document.createElement("div");
+    d.className = "g"; d.setAttribute("data-tags", it[3].join(" "));
+    var s = document.createElement("div"); s.className = "shot";
+    var im = document.createElement("img");
+    im.src = IMG(it[2]); im.alt = it[0]; im.loading = "lazy"; im.decoding = "async";
+    s.appendChild(im);
+    var b = document.createElement("div"); b.className = "body";
+    var h = document.createElement("h3"); h.textContent = it[0];
+    var p = document.createElement("p"); p.textContent = it[1];
+    var a = document.createElement("a");
+    a.className = "open"; a.textContent = "Aç";
+    a.href = href(it[2]); a.target = "_blank"; a.rel = "noopener";
+    b.appendChild(h); b.appendChild(p); b.appendChild(a);
+    d.appendChild(s); d.appendChild(b);
+    return d;
+  }
+
+  ITEMS.forEach(function(it){ gal.appendChild(card(it)); });
+
+  CHIPS.forEach(function(c){
+    var b = document.createElement("button");
+    b.className = "chip" + (c[0] === "hamisi" ? " on" : "");
+    b.type = "button"; b.textContent = c[1]; b.setAttribute("data-tag", c[0]);
+    b.addEventListener("click", function(){
+      active = c[0];
+      Array.prototype.forEach.call(chips.children, function(x){
+        x.classList.toggle("on", x.getAttribute("data-tag") === active);
+      });
+      Array.prototype.forEach.call(gal.children, function(g){
+        var tags = g.getAttribute("data-tags").split(" ");
+        g.style.display = (active === "hamisi" || tags.indexOf(active) >= 0) ? "" : "none";
+      });
+    });
+    chips.appendChild(b);
+  });
+
+  /* ---------- telefonda dönən şəkillər ---------- */
+  var SHOW = ["treyler","ad-gunu","qezet","siqnal-kagiz","kitab"];
+  var screen = $("screen"), dots = $("dots"), imgs = [], bulbs = [], cur = 0;
+  SHOW.forEach(function(k, i){
+    var im = document.createElement("img");
+    im.src = IMG(k); im.alt = ""; im.decoding = "async";
+    if (i === 0) im.className = "on";
+    screen.appendChild(im); imgs.push(im);
+    var d = document.createElement("i");
+    if (i === 0) d.className = "on";
+    dots.appendChild(d); bulbs.push(d);
+  });
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && imgs.length > 1){
+    setInterval(function(){
+      imgs[cur].classList.remove("on"); bulbs[cur].classList.remove("on");
+      cur = (cur + 1) % imgs.length;
+      imgs[cur].classList.add("on"); bulbs[cur].classList.add("on");
+    }, 3200);
+  }
+
+  /* ---------- sifariş → WhatsApp ---------- */
+  function orderText(){
+    var kime  = $("f-kime").value.trim();
+    var mun   = $("f-mun").value;
+    var paket = $("f-paket").value;
+    var vaxt  = $("f-vaxt").value;
+    var soz   = $("f-soz").value.trim();
+    var t = "Salam! Zərf səhifəsi sifariş etmək istəyirəm.\n\n";
+    t += "Kimə: " + (kime || "—") + "\n";
+    t += "Münasibət: " + mun + "\n";
+    t += "Paket: " + paket + "\n";
+    t += "Nə vaxt: " + vaxt;
+    if (soz) t += "\n\nDemək istədiyim:\n" + soz;
+    return t;
+  }
+  function wa(text){
+    return "https://wa.me/" + TEL + "?text=" + encodeURIComponent(text);
+  }
+  function open(url){
+    var w = null;
+    try{ w = window.open(url, "_blank", "noopener"); }catch(e){}
+    if (!w){ try{ location.href = url; }catch(e2){} }
+  }
+
+  var send = $("send");
+  function refresh(){ send.href = wa(orderText()); }
+  ["f-kime","f-mun","f-paket","f-vaxt","f-soz"].forEach(function(id){
+    $(id).addEventListener("input", refresh);
+    $(id).addEventListener("change", refresh);
+  });
+  refresh();
+  send.addEventListener("click", function(e){ e.preventDefault(); open(wa(orderText())); });
+
+  /* qiymətdən "Seç" — paketi seçir və formaya aparır */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-plan]"), function(a){
+    a.addEventListener("click", function(){
+      var plan = a.getAttribute("data-plan");
+      var sel = $("f-paket");
+      Array.prototype.forEach.call(sel.options, function(o, i){
+        if (o.text.indexOf(plan) === 0) sel.selectedIndex = i;
+      });
+      refresh();
+      setTimeout(function(){ $("f-kime").focus({ preventScroll:true }); }, 500);
+    });
+  });
+
+  /* WhatsApp düymələri: forma boşdursa sadə mesaj */
+  ["heroWa","topOrder","finalWa","footWa"].forEach(function(id){
+    var a = $(id); if (!a) return;
+    a.addEventListener("click", function(e){
+      if ($("f-kime").value.trim()){ return; }   /* forma doludursa ora aparsın */
+      /* boşdursa da formaya aparırıq — insan orada nə yazacağını görür */
+    });
+  });
+
+  /* ---------- üst zolaq ---------- */
+  var bar = $("bar");
+  addEventListener("scroll", function(){
+    bar.classList.toggle("stuck", scrollY > 8);
+  }, { passive:true });
+})();
+</script>
+</body>
+</html>
